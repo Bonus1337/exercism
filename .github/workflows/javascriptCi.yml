@@ -8,6 +8,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          [
+            "freelancer-rates",
+            "annalyns-infiltration",
+            "hello-world",
+            "lasagna",
+          ]
 
     steps:
       - uses: actions/checkout@v2
@@ -17,10 +26,8 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Install dependencies
-        run: yarn install
-        working-directory: ./javascript
-
-      - name: Run tests
-        run: yarn test
-        working-directory: ./javascript
+      - name: Install dependencies and run tests
+        run: |
+          cd javascript/${{ matrix.package }}
+          yarn install
+          yarn test
