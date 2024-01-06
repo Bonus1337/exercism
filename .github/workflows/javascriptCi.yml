@@ -8,26 +8,24 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package:
-          [
-            "freelancer-rates",
-            "annalyns-infiltration",
-            "hello-world",
-            "lasagna",
-          ]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: "14"
 
       - name: Install dependencies and run tests
         run: |
-          cd javascript/${{ matrix.package }}
-          yarn install
-          yarn test
+          for package in javascript/*; do
+            if [ -d "$package" ]; then
+              echo "Running tests for $package"
+              cd $package
+              yarn install
+              yarn test
+              cd ..
+            fi
+          done
