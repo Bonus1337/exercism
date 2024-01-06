@@ -20,12 +20,4 @@ jobs:
 
       - name: Install dependencies and run tests
         run: |
-          for package in javascript/*; do
-            if [ -d "$package" ]; then
-              echo "Running tests for $package"
-              cd $package
-              yarn install
-              yarn test
-              cd ../
-            fi
-          done
+          find javascript -maxdepth 1 -type d -exec sh -c 'cd {} && yarn install && yarn test' \;
