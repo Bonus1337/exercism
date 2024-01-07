@@ -16,6 +16,7 @@ jobs:
             "annalyns-infiltration",
             "hello-world",
             "lasagna",
+            "elyses-enchantments",
           ]
 
     steps:
